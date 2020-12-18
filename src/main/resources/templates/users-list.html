@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Users list</title>
+</head>
+<body>
+  <h1>Users</h1>
+  
+  <div>
+    <p th:if="${success != null}" th:text="${success}"></p>
+  </div>
+  
+  <form th:action="@{/users/search}">
+    <input type="text" name="name">
+    <button>Search Name</button>
+  </form>
+  <div>
+    <a th:href="@{/users/add}">Add App User</a>
+  </div>
+  <table border="1" th:unless="${#lists.isEmpty(users)}">
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Action</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="u : ${users}">
+        <td th:text="${u.id}"></td>
+        <td th:text="${u.name}"></td>
+        <td><a th:href="|@{/users/}${u.id}|">View Details</a></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <p th:if="${#lists.isEmpty(users)}">No users found.
+    <a th:href="@{/users}">back to list</a>
+  </p>
+</body>
+</html>
